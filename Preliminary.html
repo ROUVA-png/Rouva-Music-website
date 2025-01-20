@@ -66,6 +66,34 @@ button {
   <p></p>
   <p></p>
   <a href="index 2.html">Register Here</a>
+ <script>
+    // Select the registerbtn
+    document.getElementById('registerBtn').addEventListener('submit', function (event) {// Add an event listener for form submission
 
+      // Prevent the default form submission behavior
+      event.preventDefault();
+  
+      // User is Online Redirect to the index 2.html page
+      if (navigator.onLine) {
+      window.location.href = "index 2.html";
+      } else {
+        alert("You're currently offline.kindly connect to a wifi or an active internet connection.");
+      }
+    });
+  
+    // Select the homebtn
+    document.getElementById('HomeBtn').addEventListener('submit', function (event) {// Add an event listener for form submission
+
+      // Prevent the default form submission behavior
+      event.preventDefault();
+  
+      // User is Online Redirect to the index.html page
+      if (navigator.onLine) {
+      window.location.href = "index.html";
+      } else {
+        alert("You're currently offline.kindly connect to a wifi or an active internet connection.");
+      }
+    });
+  </script>
 </body>
 </html>
