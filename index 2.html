@@ -150,9 +150,9 @@ box-sizing: border-box;
       <label for="category">Select Payment Category</label>
       <select id="category" name="category" required>
         <option value="" disabled selected>Select a category</option>
-        <option value="newbie">Newbie - ₦100</option>
-        <option value="Intermediate">Intermediate - ₦10,000</option>
-        <option value="master">Master - ₦20,000</option>
+        <option value="index 3">Newbie - ₦100</option>
+        <option value="index 4">Intermediate - ₦10,000</option>
+        <option value="index 5">Master - ₦20,000</option>
       </select>
       
       <button type="button" id="pay-button">Pay Now</button>
@@ -201,15 +201,15 @@ box-sizing: border-box;
       let redirectPage;
   
       // Match the category to an amount and page
-      if (selectedCategory === "newbie") {
+      if (selectedCategory === "index 3") {
         amountInKobo = 100 * 100; // Convert to kobo
-        redirectPage = "newbie.html";
-      } else if (selectedCategory === "intermediate") {
+        redirectPage = "index 3.html";
+      } else if (selectedCategory === "index 4") {
         amountInKobo = 10000 * 100;
-        redirectPage = "intermediate.html";
-      } else if (selectedCategory === "master") {
+        redirectPage = "index 4.html";
+      } else if (selectedCategory === "index 5") {
         amountInKobo = 20000 * 100;
-        redirectPage = "master.html";
+        redirectPage = "index 5.html";
       } else {
         alert("Please select a valid category!");
         return;
