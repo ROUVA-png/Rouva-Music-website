@@ -150,9 +150,9 @@ box-sizing: border-box;
       <label for="category">Select Payment Category</label>
       <select id="category" name="category" required>
         <option value="" disabled selected>Select a category</option>
-        <option value="100">Newbie - ₦100</option>
-        <option value="10000">Intermediate - ₦10,000</option>
-        <option value="20000">Master - ₦20,000</option>
+        <option value="Newbie">Newbie - ₦100</option>
+        <option value="Intermediate">Intermediate - ₦10,000</option>
+        <option value="Master">Master - ₦20,000</option>
       </select>
       
       <button type="button" id="pay-button">Pay Now</button>
@@ -191,46 +191,55 @@ box-sizing: border-box;
 
   <!-- Include Paystack Inline JS -->
     <script src="https://js.paystack.co/v1/inline.js"></script>
-  
   <script>
-    // Set up Paystack payment
-    document.getElementById('pay-button').addEventListener('click', function () {
-      const paidcategory = document.getElementById('category').value;
-      const [amountInKobo, redirectPage] = paidcategory.split('-');
+    document.getElementById("pay-button").addEventListener("click", function () {
+      // Get selected category
+      const categorySelect = document.getElementById("category"); // Replace with your dropdown/select ID
+      const selectedCategory = categorySelect.value; // Get the selected category
   
+      let amountInKobo;
+      let redirectPage;
+  
+      // Match the category to an amount and page
+      if (selectedCategory === "newbie") {
+        amountInKobo = 100 * 100; // Convert to kobo
+        redirectPage = "newbie.html";
+      } else if (selectedCategory === "intermediate") {
+        amountInKobo = 10000 * 100;
+        redirectPage = "intermediate.html";
+      } else if (selectedCategory === "master") {
+        amountInKobo = 20000 * 100;
+        redirectPage = "master.html";
+      } else {
+        alert("Please select a valid category!");
+        return;
+      }
+  
+      // Initialize Paystack payment
       const handler = PaystackPop.setup({
-        key: 'pk_test_37148156d3759189a11462a9673b8225525a3dfd', // Replace with your Paystack public key
-        email: email, // Replace with the user's email
-        amount: amountInKobo * 100, // Convert amount to kobo
-        currency: 'NGN',
-        ref: `PA-${Math.floor(Math.random() * 1000000000)}`, // Generate random reference
+        key: "pk_test_37148156d3759189a11462a9673b8225525a3dfd", // Replace with your Paystack public key
+        email: "user@example.com", // Replace with user's email if dynamically filled
+        amount: amountInKobo,
+        currency: "NGN",
+        ref: "PA-" + Math.floor(Math.random() * 1000000000),
         callback: function (response) {
-          alert(`Payment successful! Transaction reference: ${response.reference}`);
-          // Store the redirect page in local storage
-          localStorage.setItem('paidcategory', redirectPage);
-          // Redirect immediately
+          // Payment successful
+          alert(
+            `Payment successful! Transaction reference: ${response.reference}`
+          );
+  
+          // Redirect to the appropriate page
           window.location.href = redirectPage;
         },
         onClose: function () {
-          alert('Transaction was not completed. Please try again.');
+          alert("Transaction was not completed. Please try again.");
         },
       });
   
       handler.openIframe(); // Open the payment popup
     });
-  
-    // Confirm payment and redirect (for index2.html)
-    function confirmPayment() {
-      // Retrieve the redirect page from local storage
-      const redirectPage = localStorage.getItem('paidcategory');
-      if (redirectPage) {
-        window.location.href = redirectPage; // Redirect to the respective page
-      }
-    }
-  
-    // Call the function when the page loads (for index2.html)
-    window.onload = confirmPayment;
   </script>
+  
   <!--
   <script>
    // Handle the Pay Now button click
