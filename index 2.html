@@ -191,6 +191,47 @@ box-sizing: border-box;
 
   <!-- Include Paystack Inline JS -->
     <script src="https://js.paystack.co/v1/inline.js"></script>
+  
+  <script>
+    // Set up Paystack payment
+    document.getElementById('pay-button').addEventListener('click', function () {
+      const paidcategory = document.getElementById('category').value;
+      const [amountInKobo, redirectPage] = paidcategory.split('-');
+  
+      const handler = PaystackPop.setup({
+        key: 'pk_test_37148156d3759189a11462a9673b8225525a3dfd', // Replace with your Paystack public key
+        email: email, // Replace with the user's email
+        amount: amountInKobo * 100, // Convert amount to kobo
+        currency: 'NGN',
+        ref: `PA-${Math.floor(Math.random() * 1000000000)}`, // Generate random reference
+        callback: function (response) {
+          alert(`Payment successful! Transaction reference: ${response.reference}`);
+          // Store the redirect page in local storage
+          localStorage.setItem('paidcategory', redirectPage);
+          // Redirect immediately
+          window.location.href = redirectPage;
+        },
+        onClose: function () {
+          alert('Transaction was not completed. Please try again.');
+        },
+      });
+  
+      handler.openIframe(); // Open the payment popup
+    });
+  
+    // Confirm payment and redirect (for index2.html)
+    function confirmPayment() {
+      // Retrieve the redirect page from local storage
+      const redirectPage = localStorage.getItem('paidcategory');
+      if (redirectPage) {
+        window.location.href = redirectPage; // Redirect to the respective page
+      }
+    }
+  
+    // Call the function when the page loads (for index2.html)
+    window.onload = confirmPayment;
+  </script>
+  <!--
   <script>
    // Handle the Pay Now button click
     document.getElementById('pay-button').addEventListener('click', function () {
@@ -232,5 +273,6 @@ box-sizing: border-box;
     });
   
 </script>
+  -->
 </body>
 </html>
