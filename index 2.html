@@ -149,12 +149,16 @@ box-sizing: border-box;
 
       <label for="category">Select Payment Category</label>
       <select id="category" name="category" required>
-        <option value="" disabled selected>Select a category</option>
+        <option value="100-newbie.html">Newbie - ₦100</option>
+        <option value="10000-intermediate.html">Intermediate - ₦10,000</option>
+        <option value="20000-master.html">Master - ₦20,000</option>
+      </select>
+      /*  <option value="" disabled selected>Select a category</option>
         <option value="100">Newbie - ₦100</option>
         <option value="10000">Intermediate - ₦10,000</option>
         <option value="20000">Master - ₦20,000</option>
       </select>
-
+*/
       <button type="button" id="pay-button">Pay Now</button>
     </form>
   </main>
@@ -190,10 +194,33 @@ box-sizing: border-box;
   </footer>
 
   <!-- Include Paystack Inline JS -->
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-
+    <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
-    // Handle the Pay Now button click
+    function payWithPaystack() {
+      // Get selected category and split the value
+      const categorySelect = document.getElementById("category").value;
+      const [amount, redirectPage] = categorySelect.split("-");
+
+      var handler = PaystackPop.setup({
+        key: 'pk_test_37148156d3759189a11462a9673b8225525a3dfd', // Replace with your Paystack public key
+        email: 'user@example.com', // Replace with user's email dynamically
+        amount: amount * 100, // Convert to kobo
+        currency: 'NGN',
+        callback: function(response) {
+          alert('Payment successful! Transaction reference: ' + response.reference);
+
+          // Redirect to the respective page
+          window.location.href = redirectPage;
+        },
+        onClose: function() {
+          alert('Transaction was not completed.');
+        }
+      });
+
+      handler.openIframe();
+    }
+  </script)
+   /* // Handle the Pay Now button click
     document.getElementById('pay-button').addEventListener('click', function () {
       // Get user details
       const name = document.getElementById('name').value.trim();
@@ -231,29 +258,8 @@ box-sizing: border-box;
       // Open the Paystack payment popup
       handler.openIframe();
     });
+  */
   
-    // Simulate a payment confirmation response
-    function confirmPayment() {
-      // Get the paid level (this should come from your payment system)
-      const paidcategory = localStorage.getItem('paidcategory'); // Retrieve saved level
-      
-      if (paidcategory === "newbie") {
-        window.location.href = "newbie.html";
-      } else if (paidcategory === 'intermediate') {
-        window.location.href = 'intermediate.html';
-      } else if (paidcategory === 'master') {
-        window.location.href = 'master.html';
-      } else {
-        
-      }
-    }
-
-    // Call the function after the page loads
-    window.onload = confirmPayment;
-  </script>
-
-  <h1>Payment Successful</h1>
-  <p>Redirecting you to your lecture page...</p>
 
 </body>
 </html>
