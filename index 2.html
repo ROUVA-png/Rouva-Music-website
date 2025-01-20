@@ -211,7 +211,7 @@ box-sizing: border-box;
 
       // Initialize Paystack payment
       const handler = PaystackPop.setup({
-        key: 'pk_live_e9ebf50a308430f8fc21876b24fa10fed5645603', 
+        key: 'pk_test_37148156d3759189a11462a9673b8225525a3dfd', 
         email: email,
         amount: amountInKobo,
         currency: 'NGN',
@@ -238,7 +238,7 @@ box-sizing: border-box;
       const paidcategory = localStorage.getItem('paidcategory'); // Retrieve saved level
       
       if (paidcategory === 'newbie') {
-        window.location.href = 'newbie.html';
+        window.location.href = "newbie.html";
       } else if (paidcategory === 'intermediate') {
         window.location.href = 'intermediate.html';
       } else if (paidcategory === 'master') {
