@@ -343,9 +343,12 @@ footer p {
         alert('Please fill out all fields before submitting.');
         return;
       }
-  
-      // Redirect to the payment.html page
-      window.location.href = 'index 2.html';
+       // Redirect to the payment.html page
+      if (navigator.onLine) {
+      window.location.href = "Preliminary.html";
+      } else {
+        alert("You're currently offline.kindly connect to a wifi or an active internet connection.");
+      }
     });
 
     
